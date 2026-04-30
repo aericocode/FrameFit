@@ -88,21 +88,83 @@ html, body {
   font-weight: 500;
 }
 
-/* BG color picker */
-#bgCustom {
+/* BG picker — button + popover */
+#bg-picker { position: relative; flex-shrink: 0; }
+
+.bg-picker-btn {
+  width: 28px; height: 28px;
+  padding: 0;
+  border: 1.5px solid var(--tk-border);
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color var(--tk-t-fast);
+  overflow: hidden;
+}
+.bg-picker-btn:hover { border-color: var(--ff-accent); }
+
+.bg-swatch {
+  width: 100%; height: 100%;
+  display: block;
+}
+
+.bg-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  background: var(--tk-bg-alt);
+  border: 1px solid var(--tk-border);
+  border-radius: var(--tk-radius);
+  padding: 10px;
+  box-shadow: var(--tk-shadow-lg);
+  display: flex; flex-direction: column; gap: 10px;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--tk-t-fast), transform var(--tk-t-fast);
+  z-index: 50;
+}
+.bg-pop.show {
+  opacity: 1; pointer-events: all;
+  transform: translateX(-50%);
+}
+
+.bg-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 22px);
+  gap: 6px;
+}
+.bg-sw {
+  width: 22px; height: 22px;
+  border-radius: 4px;
+  border: 1.5px solid var(--tk-border);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color var(--tk-t-fast), transform var(--tk-t-fast);
+}
+.bg-sw:hover { transform: scale(1.08); }
+.bg-sw.on    { border-color: var(--ff-accent); }
+
+.bg-custom-label {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--tk-border);
+  font-size: 10px;
+  color: var(--tk-text-muted);
+  font-family: 'DM Mono', monospace;
+}
+.bg-custom-label input[type="color"] {
   width: 22px; height: 22px;
   padding: 0;
   border: 1.5px solid var(--tk-border);
   border-radius: 4px;
   cursor: pointer;
   background: none;
-  flex-shrink: 0;
   -webkit-appearance: none; appearance: none;
-  transition: border-color var(--tk-t-fast);
 }
-#bgCustom:hover { border-color: var(--ff-accent); }
-#bgCustom::-webkit-color-swatch-wrapper { padding: 0; }
-#bgCustom::-webkit-color-swatch { border: none; border-radius: 2px; }
+.bg-custom-label input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.bg-custom-label input[type="color"]::-webkit-color-swatch { border: none; border-radius: 2px; }
 
 /* Playback bar */
 #pb-wrap {

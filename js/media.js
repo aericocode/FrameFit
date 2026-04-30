@@ -26,7 +26,7 @@ class MediaPlayer {
     this._vid = document.createElement('video');
     this._vid.crossOrigin  = 'anonymous';
     this._vid.playsInline  = true;
-    this._vid.loop         = false;
+    this._vid.loop         = false;  // Always false - we handle looping manually
     this._vid.volume       = 0.7;
     this._vid.style.display = 'none';
     document.body.appendChild(this._vid);
@@ -36,8 +36,39 @@ class MediaPlayer {
     this._img.style.display = 'none';
     document.body.appendChild(this._img);
 
-    this._vid.addEventListener('ended', () => this._advance());
+    // Manual loop for single-item queues: when currentTime is near duration,
+    // seek back to 0. Avoids relying on the 'ended' event (which can stall
+    // for ~10s in some Chrome configurations) or the native 'loop' attribute
+    // (which has been observed to silently fail on some webm/mp4 sources).
+    this._vid.addEventListener('timeupdate', () => {
+      if (this._queue.length !== 1) return;
+      const d = this._vid.duration;
+      if (!isFinite(d) || d <= 0) return;
+      // Seek back when within 80ms of the end - chosen to fire before the
+      // browser would emit 'ended' on its own.
+      if (this._vid.currentTime >= d - 0.08) {
+        this._vid.currentTime = 0;
+        if (this._vid.paused) this._vid.play().catch(() => {});
+      }
+    });
+
+    this._vid.addEventListener('ended', () => {
+      // Multi-item queue: advance. Single-item queue: timeupdate should have
+      // already seeked back, but if 'ended' fires anyway, restart in place
+      // instead of reloading the source (which stalls for ~10s).
+      if (this._queue.length <= 1) {
+        this._vid.currentTime = 0;
+        this._vid.play().catch(() => {});
+        return;
+      }
+      this._advance();
+    });
+
     this._vid.addEventListener('error', () => {
+      if (this._queue.length <= 1) {
+        console.warn('MediaPlayer: video error on single-item queue');
+        return;
+      }
       console.warn('MediaPlayer: video error, skipping');
       this._advance();
     });
@@ -133,7 +164,9 @@ class MediaPlayer {
   }
 
   _advance() {
-    this._idx = (this._idx + 1) % Math.max(this._queue.length, 1);
+    // Single-item queue loops natively via video.loop; this should never run for q.length === 1
+    if (this._queue.length <= 1) return;
+    this._idx = (this._idx + 1) % this._queue.length;
     this._loadCurrent();
   }
 

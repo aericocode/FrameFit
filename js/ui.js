@@ -226,8 +226,35 @@ class UIController {
   /* ── BG Swatches ── */
 
   _initBgSwatches() {
-    const custom = document.getElementById('bgCustom');
-    custom.addEventListener('input', () => this._onBgChange?.(custom.value));
+    const btn      = document.getElementById('bgBtn');
+    const pop      = document.getElementById('bgPop');
+    const trigger  = document.getElementById('bgSwatch');
+    const custom   = document.getElementById('bgCustom');
+    const swatches = document.querySelectorAll('.bg-sw');
+
+    const apply = (color) => {
+      trigger.style.background = color;
+      custom.value = color;
+      swatches.forEach(s => s.classList.toggle('on', s.dataset.bg === color));
+      this._onBgChange?.(color);
+    };
+
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      pop.classList.toggle('show');
+    });
+    document.addEventListener('click', e => {
+      if (!pop.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+        pop.classList.remove('show');
+      }
+    });
+
+    swatches.forEach(s => {
+      s.addEventListener('click', () => apply(s.dataset.bg));
+    });
+    swatches[0]?.classList.add('on');
+
+    custom.addEventListener('input', () => apply(custom.value));
   }
 
   /* ── Playback UI ── */

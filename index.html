@@ -33,7 +33,27 @@
   <span id="pc-lbl">80</span>
 
   <div class="tk-divider--v"></div>
-  <input type="color" id="bgCustom" value="#1e1f22" title="Background color">
+  <div id="bg-picker">
+    <button class="bg-picker-btn" id="bgBtn" title="Background color">
+      <span class="bg-swatch" id="bgSwatch" style="background:#1e1f22"></span>
+    </button>
+    <div class="bg-pop" id="bgPop">
+      <div class="bg-grid">
+        <button class="bg-sw" data-bg="#1e1f22" style="background:#1e1f22" title="Discord Dark"></button>
+        <button class="bg-sw" data-bg="#0d0e10" style="background:#0d0e10" title="Black"></button>
+        <button class="bg-sw" data-bg="#1a1a2e" style="background:#1a1a2e" title="Navy"></button>
+        <button class="bg-sw" data-bg="#1b2d2a" style="background:#1b2d2a" title="Forest"></button>
+        <button class="bg-sw" data-bg="#2d2b3a" style="background:#2d2b3a" title="Plum"></button>
+        <button class="bg-sw" data-bg="#3d2b1b" style="background:#3d2b1b" title="Cocoa"></button>
+        <button class="bg-sw" data-bg="#f5e6d0" style="background:#f5e6d0" title="Cream"></button>
+        <button class="bg-sw" data-bg="#d4bfae" style="background:#d4bfae" title="Latte"></button>
+      </div>
+      <label class="bg-custom-label">
+        <span>Custom</span>
+        <input type="color" id="bgCustom" value="#1e1f22">
+      </label>
+    </div>
+  </div>
 
   <div class="tk-divider--v"></div>
 
@@ -177,6 +197,7 @@
     </div>
 
     <div class="tk-modal__body">
+
       <div class="tk-field">
         <label class="tk-label-section">Add files</label>
         <div class="dz" id="dz">
