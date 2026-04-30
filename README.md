@@ -4,6 +4,8 @@ Jigsaw puzzles that play while you solve them. Drop in a video, GIF, or image â€
 
 ![Frame Fit](https://img.shields.io/badge/status-WIP-e8c547) ![Vanilla JS](https://img.shields.io/badge/stack-vanilla%20JS-5b8af0)
 
+[Launch Frame Fit](https://aericocode.github.io/FrameFit/)
+
 ## Run
 
 No build step. Clone the repo and open index.html.
