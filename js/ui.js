@@ -164,6 +164,17 @@ class UIController {
     window.addEventListener('mouseup',      ()  => { scrubbing = false; });
 
     setInterval(() => this._updatePlaybackUI(), 100);
+
+    // Info popover
+    const pop = document.getElementById('infoPop');
+    const bInfo = document.getElementById('bInfo');
+    bInfo.addEventListener('click', e => {
+      e.stopPropagation();
+      pop.classList.toggle('show');
+    });
+    document.addEventListener('click', e => {
+      if (!pop.contains(e.target) && e.target !== bInfo) pop.classList.remove('show');
+    });
   }
 
   _handleStartClick() {
@@ -215,25 +226,8 @@ class UIController {
   /* ── BG Swatches ── */
 
   _initBgSwatches() {
-    const swatches = document.querySelectorAll('.bg-sw');
-    const custom   = document.getElementById('bgCustom');
-
-    const apply = (color) => {
-      this._onBgChange?.(color);
-      swatches.forEach(s => s.classList.toggle('on', s.dataset.bg === color));
-    };
-
-    swatches[0]?.classList.add('on');
-    swatches.forEach(s => {
-      s.addEventListener('click', () => {
-        custom.value = s.dataset.bg;
-        apply(s.dataset.bg);
-      });
-    });
-    custom.addEventListener('input', () => {
-      swatches.forEach(s => s.classList.remove('on'));
-      apply(custom.value);
-    });
+    const custom = document.getElementById('bgCustom');
+    custom.addEventListener('input', () => this._onBgChange?.(custom.value));
   }
 
   /* ── Playback UI ── */
@@ -408,8 +402,7 @@ class UIController {
   /* ── Progress ── */
 
   setProgress({ done, total, pct }) {
-    document.getElementById('plbl').textContent = `${done} / ${total} snaps`;
-    document.getElementById('pbf').style.width  = (pct * 100).toFixed(1) + '%';
+    document.getElementById('plbl').textContent = Math.round(pct * 100) + '%';
   }
 
   /* ── Snap flash ── */

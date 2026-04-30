@@ -29,21 +29,11 @@
   </button>
 
   <div class="tk-divider--v"></div>
-  <span class="lbl">Pieces</span>
-  <input type="range" id="iPieces" min="0" max="14" step="1" value="6">
+  <input type="range" id="iPieces" min="0" max="14" step="1" value="6" title="Piece count">
   <span id="pc-lbl">80</span>
 
   <div class="tk-divider--v"></div>
-  <div id="bg-wrap">
-    <span class="lbl">BG</span>
-    <div class="bg-sw" data-bg="#1e1f22" style="background:#1e1f22" title="Discord Dark"></div>
-    <div class="bg-sw" data-bg="#0d0e10" style="background:#0d0e10" title="Black"></div>
-    <div class="bg-sw" data-bg="#1a1a2e" style="background:#1a1a2e" title="Navy"></div>
-    <div class="bg-sw" data-bg="#1b2d2a" style="background:#1b2d2a" title="Forest"></div>
-    <div class="bg-sw" data-bg="#f5e6d0" style="background:#f5e6d0" title="Cream"></div>
-    <div class="bg-sw" data-bg="#d4bfae" style="background:#d4bfae" title="Latte"></div>
-    <input type="color" id="bgCustom" value="#1e1f22" title="Custom color">
-  </div>
+  <input type="color" id="bgCustom" value="#1e1f22" title="Background color">
 
   <div class="tk-divider--v"></div>
 
@@ -79,9 +69,10 @@
       <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 3h1.5v10H3zm9.5 0L5.5 8l7 5V3z"/></svg>
     </button>
     <button class="pb-btn" id="bBack10" title="Back 10s">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
-        <path d="M8 3a5 5 0 110 10A5 5 0 018 3z"/>
-        <path d="M8 1v4H4" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/>
+        <path d="M3 4v5h5"/>
+        <text x="12" y="16" text-anchor="middle" font-size="9" font-weight="500" font-family="DM Mono, monospace" stroke="none" fill="currentColor">10</text>
       </svg>
     </button>
     <button class="pb-btn" id="bPlayPause" title="Play / Pause">
@@ -89,9 +80,10 @@
       <svg id="ico-pause" viewBox="0 0 16 16" fill="currentColor" style="display:none"><path d="M4 3h2v10H4zm6 0h2v10h-2z"/></svg>
     </button>
     <button class="pb-btn" id="bFwd10" title="Forward 10s">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
-        <path d="M8 3a5 5 0 100 10A5 5 0 008 3z"/>
-        <path d="M8 1v4h4" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/>
+        <path d="M21 4v5h-5"/>
+        <text x="12" y="16" text-anchor="middle" font-size="9" font-weight="500" font-family="DM Mono, monospace" stroke="none" fill="currentColor">10</text>
       </svg>
     </button>
     <button class="pb-btn" id="bNext" title="Next track">
@@ -119,11 +111,22 @@
   </div>
 
   <div class="stat">
-    <div class="pill">
-      <span id="plbl">0 / 0 snaps</span>
-      <div class="pbw"><div class="pbf" id="pbf"></div></div>
+    <div class="pill" id="progressPill" title="Puzzle progress">
+      <span id="plbl">0%</span>
     </div>
-    <span class="hint">Space+drag · scroll zoom</span>
+    <button class="pb-btn" id="bInfo" title="Help">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="8" cy="8" r="6.5"/>
+        <path d="M8 7v4" stroke-linecap="round"/>
+        <circle cx="8" cy="4.8" r="0.5" fill="currentColor"/>
+      </svg>
+    </button>
+    <div class="info-pop" id="infoPop">
+      <div class="info-row"><kbd>Drag</kbd> piece or group</div>
+      <div class="info-row"><kbd>Space</kbd> + drag to pan</div>
+      <div class="info-row"><kbd>Scroll</kbd> to zoom</div>
+      <div class="info-row"><kbd>Middle-click</kbd> + drag to pan</div>
+    </div>
   </div>
 </div>
 
